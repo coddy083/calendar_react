@@ -29,7 +29,15 @@ function App() {
         setDay={setDay}
       />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(7, 1fr)",
+          height: 450,
+          width: "100vw",
+          overflow: "hidden",
+        }}
+      >
         {calendar.map((date, index) => (
           <div
             key={index}
@@ -74,7 +82,7 @@ function App() {
           </div>
         ))}
       </div>
-      <div>
+      <div style={{ minHeight: 300 }}>
         <h4>오늘의 할일</h4>
         {/* 날짜에 맞는 message가 있을경우 표시한다 */}
         {workList.map((work) => {

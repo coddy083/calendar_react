@@ -13,6 +13,47 @@ export const YearMonthOutputBox = styled.div`
   font-size: 14px;
 `;
 
+function MonthChangeButton({
+  arrow,
+  month,
+  year,
+  setMonth,
+  setYear,
+  setDay,
+}: {
+  arrow: string;
+  month: number;
+  year: number;
+  setMonth: React.Dispatch<React.SetStateAction<number>>;
+  setYear: React.Dispatch<React.SetStateAction<number>>;
+  setDay: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  return (
+    <button
+      onClick={() => {
+        if (arrow === "◀️") {
+          if (month === 1) {
+            setMonth(12);
+            setYear(year - 1);
+          } else {
+            setMonth(month - 1);
+          }
+        } else if (arrow === "▶️") {
+          if (month === 12) {
+            setMonth(1);
+            setYear(year + 1);
+          } else {
+            setMonth(month + 1);
+          }
+        }
+        setDay(1);
+      }}
+    >
+      {arrow}
+    </button>
+  );
+}
+
 export default function MonthChange({
   month,
   setMonth,
@@ -28,36 +69,18 @@ export default function MonthChange({
 }) {
   return (
     <MonthChangeBox>
-      <button
-        onClick={() =>
-          //만약 month가 1이면 12로 바꾸고 year를 -1 해준다.
-          //month가 1이 아니면 month를 -1 해준다.
-          //month가 바뀌면 day를 1로 초기화 한다
-          // month === 1
-          //   ? (setMonth(12), setYear(year - 1))
-          //   : setMonth(month - 1)
-          month === 1
-            ? (setMonth(12), setYear(year - 1), setDay(1))
-            : (setMonth(month - 1), setDay(1))
-        }
-      >
-        ◀️
-      </button>
+      <MonthChangeButton
+        arrow={"◀️"}
+        {...{ month, year, setMonth, setYear, setDay }}
+      />
       <YearMonthOutputBox>
         <span>{year}년</span>
         <span>{month}월</span>
       </YearMonthOutputBox>
-      <button
-        onClick={() =>
-          // 만약 month가 12이면 1로 바꾸고 year를 +1 해준다.
-          // month가 12가 아니면 month를 +1 해준다.
-          month === 12
-            ? (setMonth(1), setYear(year + 1), setDay(1))
-            : (setMonth(month + 1), setDay(1))
-        }
-      >
-        ▶️
-      </button>
+      <MonthChangeButton
+        arrow={"▶️"}
+        {...{ month, year, setMonth, setYear, setDay }}
+      />
     </MonthChangeBox>
   );
 }
